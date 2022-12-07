@@ -1,0 +1,47 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+      - next
+      - next-major
+      - alpha
+      - beta
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️　Checkout
+        uses: actions/checkout@v3
+
+      - name: 🎉　Setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: 🎉　Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: false
+
+      - name: 🚧　Install
+        run: pnpm install --no-frozen-lockfile --ignore-scripts
+
+      - name: 🚀　Build
+        run: pnpm run build
+
+      - name: 🔑　Generate Token
+        uses: wow-actions/use-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: 📦　Release
+        uses: wow-actions/release-github-action@v1
+        with:
+          GITHUB_TOKEN: ${{ env.BOT_TOKEN }}
+          GIT_AUTHOR_NAME: ${{ env.BOT_NAME }}[bot]
+          GIT_AUTHOR_EMAIL: ${{ env.BOT_NAME }}[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: ${{ env.BOT_NAME }}[bot]
+          GIT_COMMITTER_EMAIL: ${{ env.BOT_NAME }}[bot]@users.noreply.github.com

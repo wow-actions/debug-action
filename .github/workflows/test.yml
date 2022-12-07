@@ -1,0 +1,27 @@
+name: Test
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️　Checkout
+        uses: actions/checkout@v3
+
+      - name: 🎉　Setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: 🎉　Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: false
+
+      - name: 🚧　Install
+        run: pnpm install --no-frozen-lockfile --ignore-scripts
+
+      - name: 🚀　Build
+        run: pnpm run build
+
+      - uses: ./

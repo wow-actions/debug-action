@@ -1,0 +1,59 @@
+{
+  "name": "debugger",
+  "version": "1.0.0",
+  "description": "A Github Action to log the workflow's environment variables and event payload",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "action.yml"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "lint": "eslint 'src/**/*.{js,ts}?(x)' --fix",
+    "build": "ncc build src/index.ts --minify --v8-cache",
+    "dev": "act -W act.yml -r --use-gitignore=false",
+    "prebuild": "run-s lint clean",
+    "prepare": "is-ci || husky install .husky"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "pretty-quick — staged"
+    ],
+    "*.ts": [
+      "eslint --fix"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "license": "MIT",
+  "author": {
+    "name": "bubkoo",
+    "email": "bubkoo.wy@gmail.com"
+  },
+  "repository": "https://github.com/wow-actions/debugger",
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.1.0",
+    "@types/node": "^18.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "@vercel/ncc": "^0.34.0",
+    "eslint": "^8.25.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.0",
+    "husky": "^8.0.1",
+    "is-ci": "^3.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.4.1",
+    "pretty-quick": "^3.1.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.4"
+  }
+}

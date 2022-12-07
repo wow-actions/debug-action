@@ -1,0 +1,9 @@
+name: Action Debugger
+description: Log the workflow's environment variables and event payload
+author: bubkoo <bubkoo.wy@gmail.com>
+branding:
+  icon: code
+  color: yellow
+runs:
+  using: node16
+  main: dist/index.js
